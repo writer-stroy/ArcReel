@@ -1,10 +1,9 @@
-name: opencode
 on:
   issue_comment:
     types: [created]
   pull_request_review_comment:
     types: [created]
-  workflow_dispatch:
+  workflow_dispatch:   # ←【新增】手动按钮触发
     inputs:
       prompt:
         description: '输入任务指令'
@@ -13,21 +12,10 @@ on:
 
 jobs:
   opencode:
+    # ←【修改】判断：有手动输入 或者 评论带 /oc 都放行
     if: ${{ github.event.inputs.prompt || contains(github.event.comment.body, '/oc') || contains(github.event.comment.body, '/opencode') }}
-    runs-on: ubuntu-latest
-    permissions:
-      id-token: write
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v6
-        with:
-          fetch-depth: 1
-          persist-credentials: false
-
-      - name: Run OpenCode
-        uses: anomalyco/opencode/github@latest
-        env:
-          DOUBAO_API_KEY: ${{ secrets.DOUBAO_API_KEY }}
-        with:
-          model: doubao
-          prompt: ${{ github.event.inputs.prompt || github.event.comment.body }}
+    ……
+    with:
+      model: doubao
+      # ←【新增】优先读取手动输入，没有就读评论
+      prompt: ${{ github.event.inputs.prompt || github.event.comment.body }}
