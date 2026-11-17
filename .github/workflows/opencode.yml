@@ -34,5 +34,5 @@ jobs:
         env:
           DOUBAO_API_KEY: ${{ secrets.DOUBAO_API_KEY }}
         with:
-          model: doubao/doubao-pro
+          model: volcengine/doubao-seed-2.0-pro
           prompt: ${{ github.event.inputs.prompt || github.event.comment.body }}
