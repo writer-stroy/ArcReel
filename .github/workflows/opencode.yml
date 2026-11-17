@@ -30,7 +30,7 @@ jobs:
           persist-credentials: false
 
       - name: Run OpenCode
-        uses: anomalyco/opencode/github@latest
+        uses: anomalyco/opencode/github@v2.1.0
         env:
           DOUBAO_API_KEY: ${{ secrets.DOUBAO_API_KEY }}
         with:
